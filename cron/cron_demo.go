@@ -5,6 +5,7 @@ import (
 	"log"
 )
 
+// 实现精确到秒的定时任务
 func main() {
 	i := 0
 	c := cron.New()
