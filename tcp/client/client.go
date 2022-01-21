@@ -20,7 +20,7 @@ func main() {
 	for {
 		input, _ := inputReader.ReadString('\n')
 		inputInfo := strings.Trim(input, "\r\n")
-		if strings.ToUpper(inputInfo)== "Q" {
+		if strings.ToUpper(inputInfo) == "Q" {
 			return
 		}
 		_, err := conn.Write([]byte(inputInfo))
