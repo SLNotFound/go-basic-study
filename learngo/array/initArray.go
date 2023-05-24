@@ -9,8 +9,8 @@ var arr2 = [...]int{1, 2, 3, 4, 5, 6}
 var str = [5]string{3: "hello world", 4: "tom"}
 
 // 多维数组
-var arr3  [5][3]int
-var arr4  [2][3]int = [...][3]int{{1, 2, 3}, {7, 8, 9}}
+var arr3 [5][3]int
+var arr4 [2][3]int = [...][3]int{{1, 2, 3}, {7, 8, 9}}
 
 func main() {
 	a := [3]int{1, 2}           // 未初始化元素值为 0。
