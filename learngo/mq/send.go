@@ -3,7 +3,20 @@ package main
 import (
 	"github.com/streadway/amqp"
 	"helloworld/learngo/mq/mq"
+	"log"
+	"os"
+	"strings"
 )
+
+func bodyForm(args []string) string {
+	var s string
+	if (len(args) < 2) || os.Args[1] == "" {
+		s = "hello"
+	} else {
+		s = strings.Join(args[1:], " ")
+	}
+	return s
+}
 
 func main() {
 	conn, err := amqp.Dial("amqp://guest:guest@8.130.142.45:5672/")
@@ -24,16 +37,18 @@ func main() {
 	)
 	mq.FailOnError(err, "Failed to declare a queue")
 
-	body := "Hello World!"
+	body := bodyForm(os.Args)
 	err = ch.Publish(
 		"",
 		q.Name,
 		false,
 		false,
 		amqp.Publishing{
-			ContentType: "text/plain",
-			Body:        []byte(body),
+			DeliveryMode: amqp.Persistent,
+			ContentType:  "text/plain",
+			Body:         []byte(body),
 		})
 
 	mq.FailOnError(err, "Failed to publish a message")
+	log.Printf(" [x] Sent %s", body)
 }
