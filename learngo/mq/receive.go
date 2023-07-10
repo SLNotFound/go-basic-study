@@ -18,19 +18,25 @@ func main() {
 	defer ch.Close()
 
 	q, err := ch.QueueDeclare(
-		"hello",
-		false,
+		"task_queue",
+		true,
 		false,
 		false,
 		false,
 		nil,
 	)
-	mq.FailOnError(err, "Failed to declare a queue")
+
+	err = ch.Qos(
+		1,
+		0,
+		false,
+	)
+	mq.FailOnError(err, "ch.Qos() failed")
 
 	msgs, err := ch.Consume(
 		q.Name, // queue
 		"",     // consumer
-		true,   // auto-ack
+		false,  // auto-ack
 		false,  // exclusive
 		false,  // no-local
 		false,  // no-wait
@@ -47,6 +53,7 @@ func main() {
 			t := time.Duration(dot)
 			time.Sleep(t * time.Second)
 			log.Printf("Done")
+			d.Ack(false)
 		}
 	}()
 
