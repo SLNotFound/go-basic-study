@@ -52,10 +52,15 @@ func main() {
 	//db.Omit("Name").Create(&user4)
 
 	// 5、批量插入
-	var users = []User{{Name: "test1"}, {Name: "test2"}, {Name: "test3"}}
-	db.Create(&users)
+	//var users = []User{{Name: "test1"}, {Name: "test2"}, {Name: "test3"}}
+	//db.Create(&users)
+	//
+	//for _, user := range users {
+	//	fmt.Println(user.ID)
+	//}
 
-	for _, user := range users {
-		fmt.Println(user.ID)
-	}
+	// 查询数据
+	user := User{}
+	result := db.First(&user)
+	fmt.Println(result)
 }
